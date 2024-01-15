@@ -4,6 +4,9 @@
 
 FixTess4j4Mac is a simple library that adds the required C library from tesseract into the tess4j jar file so that you can use tess4j on a Mac without the missing resource error.
 
+## Executable Now Available
+There is now a GRAALVM compiled native-image available from the [releases page](https://github.com/EasyG0ing1/FixTess4j4Mac/releases/latest) that you can download and run to patch your Tess4j jar file. Just get the program and run it and the menu will be self explanatory.
+
 ### Adding this library to your project
 The library is available as a Maven dependency on Central. Add the following to your POM file:
 
