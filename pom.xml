@@ -1,24 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.simtechdata</groupId>
     <artifactId>FixTess4j4Mac</artifactId>
-    <version>1.0.0</version>
-
+    <version>2.0.0</version>
     <name>${project.artifactId}</name>
     <description>A Utility Library that adds required support to the Tess4j library for MacOS.</description>
     <url>https://github.com/EasyG0ing1/FixTess4j4Mac</url>
-
     <licenses>
         <license>
             <name>The Apache License, Version 2.0</name>
             <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
-
     <developers>
         <developer>
             <name>Mike Sims</name>
@@ -33,28 +27,39 @@
             </roles>
         </developer>
     </developers>
-
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven-javadoc-plugin>3.6.3</maven-javadoc-plugin>
+        <maven-toolchains-plugin>3.1.0</maven-toolchains-plugin>
+        <maven-jar-plugin>3.3.0</maven-jar-plugin>
+        <maven-release-plugin>3.0.1</maven-release-plugin>
+        <maven-source-plugin>3.3.0</maven-source-plugin>
+        <maven-gpg-plugin>3.1.0</maven-gpg-plugin>
+        <nexus-staging-maven-plugin>1.6.13</nexus-staging-maven-plugin>
+        <maven-deploy-plugin>3.1.1</maven-deploy-plugin>
+        <maven-compiler-plugin>3.12.1</maven-compiler-plugin>
+        <versions-maven-plugin>2.16.2</versions-maven-plugin>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
+            <version>2.15.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.simtechdata</groupId>
+            <artifactId>JavaProc</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
-
     <scm>
         <connection>scm:git:git://github.com/EasyG0ing1/FixTess4j4Mac.git</connection>
         <developerConnection>scm:git:git@github.com:EasyG0ing1/FixTess4j4Mac.git</developerConnection>
         <url>https://github.com/EasyG0ing1/FixTess4j4Mac</url>
         <tag>HEAD</tag>
     </scm>
-
     <profiles>
         <!-- GPG signature on release -->
         <profile>
@@ -70,7 +75,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>${maven-gpg-plugin}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -85,7 +90,6 @@
             </build>
         </profile>
     </profiles>
-
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
@@ -96,14 +100,32 @@
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
-
     <build>
         <plugins>
+            <!-- Maven Versions -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${versions-maven-plugin}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>display-dependency-updates</goal>
+                            <goal>display-plugin-updates</goal>
+                            <goal>property-updates-report</goal>
+                            <goal>dependency-updates-report</goal>
+                            <goal>plugin-updates-report</goal>
+                            <goal>update-properties</goal>
+                            <goal>use-latest-versions</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!-- Nexus staging Maven plugin -->
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
+                <version>${nexus-staging-maven-plugin}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <serverId>ossrh</serverId>
@@ -115,7 +137,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${maven-deploy-plugin}</version>
                 <executions>
                     <execution>
                         <id>default-deploy</id>
@@ -130,7 +152,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>${maven-jar-plugin}</version>
                 <configuration>
                     <skipIfEmpty>true</skipIfEmpty>
                     <archive>
@@ -145,7 +167,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>3.0.0-M7</version>
+                <version>${maven-release-plugin}</version>
                 <configuration>
                     <localCheckout>true</localCheckout>
                     <pushChanges>false</pushChanges>
@@ -155,7 +177,7 @@
                     <dependency>
                         <groupId>org.apache.maven.scm</groupId>
                         <artifactId>maven-scm-provider-gitexe</artifactId>
-                        <version>2.0.0-M3</version>
+                        <version>2.0.1</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -163,7 +185,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>${maven-source-plugin}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -185,7 +207,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>${maven-javadoc-plugin}</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <author>true</author>
@@ -207,7 +229,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${maven-gpg-plugin}</version>
                 <executions>
                     <execution>
                         <id>sign-artifact</id>
@@ -222,7 +244,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-toolchains-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-toolchains-plugin}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -243,7 +265,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>${maven-compiler-plugin}</version>
                 <configuration>
                     <source>11</source>
                     <target>11</target>
@@ -251,4 +273,5 @@
             </plugin>
         </plugins>
     </build>
+    
 </project>
